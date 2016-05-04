@@ -15,11 +15,11 @@ RUN wget -nv https://releases.hashicorp.com/serf/0.7.0/serf_0.7.0_linux_amd64.zi
 RUN apt-get install -y openssh-server apache2 supervisor
 RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/run/sshd /var/log/supervisor
 
-
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-COPY serf.sh /usr/local/bin/serf.sh
-RUN chmod a+x /usr/local/bin/serf.sh
 
-EXPOSE 22 7946
+WORKDIR /working
+COPY cgi-bin /working/cgi-bin
+
+EXPOSE 22 7946 9000
 CMD ["/usr/bin/supervisord"]
